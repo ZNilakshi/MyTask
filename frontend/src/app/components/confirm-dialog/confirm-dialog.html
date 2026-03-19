@@ -1,0 +1,30 @@
+<div class="confirm-dialog">
+
+  <!-- Red accent bar at the top -->
+  <div class="confirm-dialog__bar"></div>
+
+  <div class="confirm-dialog__inner">
+
+    <!-- Header -->
+    <div class="confirm-dialog__header">
+      <div class="confirm-dialog__header-left">
+        <span class="confirm-dialog__eyebrow">Destructive action</span>
+        <h2 class="confirm-dialog__title">Delete task</h2>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <p class="confirm-dialog__message">{{ data.message }}</p>
+    <p class="confirm-dialog__warning">This action cannot be undone</p>
+
+    <!-- Footer -->
+    <div class="confirm-dialog__footer">
+      <button mat-button class="btn-cancel" (click)="cancel()">Cancel</button>
+      <button mat-button class="btn-delete" (click)="confirm()">
+        <mat-icon>delete_outline</mat-icon>
+        Delete
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="task-card" [ngClass]="cardClass">
+
+    <!--  status badge + action buttons -->
+    <div class="card-top">
+      <span class="card-status" [ngClass]="statusBadgeClass">
+        {{ statusLabel }}
+      </span>
+      <div class="card-actions" (click)="$event.stopPropagation()">
+        <button mat-icon-button (click)="onEdit()" aria-label="Edit task">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="onDelete()" aria-label="Delete task">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </div>
+    </div>
+  
+    <!-- Title -->
+    <h3 class="card-title">{{ task.title }}</h3>
+  
+    <!-- Description preview -->
+    @if (task.description) {
+      <p class="card-desc">{{ truncate(task.description) }}</p>
+    }
+  
+    <!-- View details button -->
+    <button class="view-more-btn" (click)="onView()">
+      <mat-icon>open_in_new</mat-icon>
+      View details
+    </button>
+  
+    <!-- Footer: created date -->
+    @if (task.createdAt) {
+      <div class="card-footer">
+        <mat-icon class="date-icon">schedule</mat-icon>
+        <span class="card-date">{{ task.createdAt | date: 'dd MMM yyyy' }}</span>
+      </div>
+    }
+  
+  </div>

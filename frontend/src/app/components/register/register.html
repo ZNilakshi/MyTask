@@ -1,0 +1,74 @@
+<div class="auth-container">
+  <mat-card class="auth-card">
+
+    <div class="card-left">
+      <div class="brand-block">
+        <span class="brand-letter">My Tasks</span>
+        <span class="brand-label">REGISTER</span>
+      </div>
+      <p class="brand-tagline">Create your account to get started today.</p>
+      <div class="brand-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <div class="card-right">
+      <mat-card-header>
+        <mat-card-title>Create Account</mat-card-title>
+        <mat-card-subtitle>Fill in your details below</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" placeholder="Choose a username"/>
+            @if (form.get('username')?.hasError('required') && form.get('username')?.touched) {
+              <mat-error>Username is required</mat-error>
+            }
+            @if (form.get('username')?.hasError('minlength') && form.get('username')?.touched) {
+              <mat-error>Username must be at least 3 characters</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" placeholder="Choose a password"/>
+            @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
+              <mat-error>Password is required</mat-error>
+            }
+            @if (form.get('password')?.hasError('minlength') && form.get('password')?.touched) {
+              <mat-error>Password must be at least 6 characters</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput type="password" formControlName="confirmPassword" placeholder="Re-enter your password"/>
+            @if (form.get('confirmPassword')?.hasError('required') && form.get('confirmPassword')?.touched) {
+              <mat-error>Please confirm your password</mat-error>
+            }
+            @if (form.get('confirmPassword')?.hasError('passwordMismatch') && form.get('confirmPassword')?.touched) {
+              <mat-error>Passwords do not match</mat-error>
+            }
+          </mat-form-field>
+
+          @if (errorMessage) {
+            <p class="error-message">{{ errorMessage }}</p>
+          }
+
+          <button mat-raised-button type="submit" class="full-width submit-btn" [disabled]="form.invalid">
+            Register
+          </button>
+
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <p class="auth-link">Already have an account? <a routerLink="/login">Sign in</a></p>
+      </mat-card-actions>
+    </div>
+
+  </mat-card>
+</div>

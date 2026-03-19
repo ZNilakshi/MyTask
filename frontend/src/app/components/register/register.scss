@@ -1,0 +1,344 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+//  Variables
+$black:       #0a0a0a;
+$white:       #ffffff;
+$off-white:   #f8f7f5;
+$mid-gray:    #888;
+$light-gray:  #e8e6e2;
+$error-red:   #c0392b;
+
+// Page wrapper 
+.auth-container {
+  min-height: 100vh;
+  background: $off-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+ // Card shell
+.auth-card {
+  display: flex !important;
+  flex-direction: row;
+  width: 100%;
+  max-width: 820px;
+  min-height: 560px;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden;
+  border: 1px solid $light-gray;
+  padding: 0 !important;
+  animation: cardReveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  mat-card-content,
+  mat-card-header,
+  mat-card-actions {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ── Left panel ─────────────────────────────────────────────
+.card-left {
+  flex: 0 0 38%;
+  background: $black;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+
+  // Subtle noise texture overlay
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.15;
+    pointer-events: none;
+  }
+}
+
+.brand-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.brand-letter {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 7rem;
+  font-weight: 300;
+  line-height: 1;
+  color: $white;
+  letter-spacing: -4px;
+  animation: slideUp 0.7s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.brand-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  color: rgba($white, 0.45);
+  text-transform: uppercase;
+  animation: slideUp 0.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.brand-tagline {
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba($white, 0.55);
+  margin: 0;
+  animation: slideUp 0.7s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.brand-dots {
+  display: flex;
+  gap: 6px;
+  animation: slideUp 0.7s 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba($white, 0.25);
+
+    &:first-child { background: $white; }
+  }
+}
+
+// ── Right panel ────────────────────────────────────────────
+.card-right {
+  flex: 1;
+  background: $white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 3rem 2.5rem;
+  animation: slideUp 0.7s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ── Header ─────────────────────────────────────────────────
+mat-card-title.mat-mdc-card-title {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+  color: $black !important;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  margin-bottom: 4px !important;
+}
+
+mat-card-subtitle.mat-mdc-card-subtitle {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  color: $mid-gray !important;
+  letter-spacing: 0.02em;
+  margin-bottom: 2rem !important;
+}
+
+//  Divider under header ────────────────────────────────────
+mat-card-header.mat-mdc-card-header {
+  position: relative;
+  padding-bottom: 1.5rem !important;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 32px;
+    height: 2px;
+    background: $black;
+  }
+}
+
+//  Form fields ─────────────────────────────────────────────
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 1.75rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+// Override Angular Material outline appearance
+.mat-mdc-form-field.mat-form-field-appearance-outline {
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: $light-gray !important;
+    border-width: 1px !important;
+    transition: border-color 0.2s ease;
+  }
+
+  &:hover .mdc-notched-outline__leading,
+  &:hover .mdc-notched-outline__notch,
+  &:hover .mdc-notched-outline__trailing {
+    border-color: rgba($black, 0.4) !important;
+  }
+
+  &.mat-focused .mdc-notched-outline__leading,
+  &.mat-focused .mdc-notched-outline__notch,
+  &.mat-focused .mdc-notched-outline__trailing {
+    border-color: $black !important;
+    border-width: 1.5px !important;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+
+  .mdc-floating-label {
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    color: $mid-gray !important;
+  }
+
+  &.mat-focused .mdc-floating-label {
+    color: $black !important;
+  }
+
+  input.mat-mdc-input-element {
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.9rem !important;
+    font-weight: 400 !important;
+    color: $black !important;
+    caret-color: $black !important;
+  }
+
+  .mat-mdc-form-field-error-wrapper {
+    padding: 0 !important;
+  }
+
+  mat-error {
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.72rem !important;
+    color: $error-red !important;
+    letter-spacing: 0.01em;
+  }
+
+  .mat-mdc-form-field-focus-overlay { display: none; }
+}
+
+//  Submit button ───────────────────────────────────────────
+.submit-btn {
+  height: 48px !important;
+  margin-top: 0.75rem !important;
+  border-radius: 0 !important;
+  background: $black !important;
+  color: $white !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
+  box-shadow: none !important;
+  border: 1px solid $black !important;
+  transition: background 0.2s ease, color 0.2s ease !important;
+
+  &:hover:not(:disabled) {
+    background: $white !important;
+    color: $black !important;
+  }
+
+  &:disabled {
+    background: $light-gray !important;
+    color: $mid-gray !important;
+    border-color: $light-gray !important;
+    cursor: not-allowed;
+  }
+}
+
+// ── Error message ───────────────────────────────────────────
+.error-message {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  color: $error-red;
+  margin: 0.5rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 2px solid $error-red;
+  background: rgba($error-red, 0.04);
+}
+
+//  Footer link ─────────────────────────────────────────────
+mat-card-actions {
+  margin-top: 1.5rem !important;
+  border-top: 1px solid $light-gray;
+  padding-top: 1.25rem !important;
+}
+
+.auth-link {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  color: $mid-gray;
+  margin: 0;
+  text-align: center;
+
+  a {
+    color: $black;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid $black;
+    padding-bottom: 1px;
+    transition: opacity 0.15s ease;
+
+    &:hover { opacity: 0.5; }
+  }
+}
+
+//  Responsive ─────────────────────────────────────────────
+@media (max-width: 640px) {
+  .auth-container {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .auth-card {
+    flex-direction: column;
+    border: none;
+    border-radius: 0 !important;
+    min-height: 100vh;
+  }
+
+  .card-left {
+    flex: 0 0 auto;
+    padding: 2rem 1.75rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .brand-tagline,
+    .brand-dots { display: none; }
+
+    .brand-letter { font-size: 3.5rem; }
+  }
+
+  .card-right {
+    padding: 2rem 1.75rem;
+  }
+}

@@ -1,0 +1,243 @@
+<div class="page-container">
+
+  <!-- ── Toolbar ─────────────────────────────────────────────── -->
+  <nav class="toolbar">
+    <div class="toolbar-left">
+      <span class="brand-mark">TM</span>
+      <p class="page-title">Task Manager</p>
+    </div>
+    <div class="toolbar-actions">
+      <button mat-button class="btn-new" (click)="openForm()">
+        <mat-icon>add</mat-icon> New Task
+      </button>
+      <button mat-button class="btn-logout" (click)="logout()">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Hero banner ──────────────────────────────────────────── -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <p class="hero-time">{{ greeting }}</p>
+        <h1 class="hero-name">{{ authService.getUsername() }}</h1>
+        <p class="hero-quote">{{ motivationalQuote }}</p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">{{ totalTodo }}</span>
+          <span class="hero-stat-label">To Do</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">{{ totalInProgress }}</span>
+          <span class="hero-stat-label">In Progress</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">{{ totalDone }}</span>
+          <span class="hero-stat-label">Done</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Filter row ───────────────────────────────────────────── -->
+  <div class="filter-row">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Filter by status</mat-label>
+      <mat-select [(ngModel)]="selectedStatus">
+        <mat-option value="">All tasks</mat-option>
+        @for (s of statusOptions; track s) {
+          <mat-option [value]="s">{{ statusLabel(s) }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <span class="task-count">{{ filteredTasks.length }} task{{ filteredTasks.length !== 1 ? 's' : '' }}</span>
+  </div>
+
+  <!-- ── Kanban columns ───────────────────────────────────────── -->
+  <div class="kanban">
+
+    <!-- TO DO -->
+    <div class="column">
+      <div class="col-header">
+        <div class="col-info">
+          <span class="col-title">To Do</span>
+          <span class="col-sub">Pending work</span>
+        </div>
+        <span class="col-count">{{ todoTasks.length }}</span>
+      </div>
+      @for (task of todoTasks; track task.id) {
+        <app-task-card
+          [task]="task"
+          (viewTask)="openTask($event)"
+          (editTask)="openForm($event)"
+          (deleteTask)="deleteTask($event)"
+        />
+      }
+      @empty {
+        <p class="col-empty">No tasks</p>
+      }
+    </div>
+
+    <!-- IN PROGRESS -->
+    <div class="column">
+      <div class="col-header">
+        <div class="col-info">
+          <span class="col-title">In Progress</span>
+          <span class="col-sub">Currently active</span>
+        </div>
+        <span class="col-count">{{ inProgressTasks.length }}</span>
+      </div>
+      @for (task of inProgressTasks; track task.id) {
+        <app-task-card
+          [task]="task"
+          (viewTask)="openTask($event)"
+          (editTask)="openForm($event)"
+          (deleteTask)="deleteTask($event)"
+        />
+      }
+      @empty {
+        <p class="col-empty">No tasks</p>
+      }
+    </div>
+
+    <!-- DONE -->
+    <div class="column">
+      <div class="col-header">
+        <div class="col-info">
+          <span class="col-title">Done</span>
+          <span class="col-sub">Completed work</span>
+        </div>
+        <span class="col-count">{{ doneTasks.length }}</span>
+      </div>
+      @for (task of doneTasks; track task.id) {
+        <app-task-card
+          [task]="task"
+          (viewTask)="openTask($event)"
+          (editTask)="openForm($event)"
+          (deleteTask)="deleteTask($event)"
+        />
+      }
+      @empty {
+        <p class="col-empty">No tasks</p>
+      }
+    </div>
+
+  </div>
+
+</div><!-- /page-container -->
+
+
+<!-- ── Form modal ───────────────────────────────────────────── -->
+@if (formOpen) {
+  <div class="modal-overlay" (click)="closeForm()">
+    <div class="form-modal-box" (click)="$event.stopPropagation()">
+      <div class="modal-top-bar" [ngClass]="'bar-' + (editingTask?.status?.toLowerCase() ?? 'todo')"></div>
+      <!--
+        @Input  task         — null = create mode, Task = edit mode
+        @Input  errorMessage — API error text, displayed inside the form
+        @Output formSubmit   — child emits payload; parent handles API call
+        @Output formCancel   — child tells parent to close modal
+      -->
+      <app-task-form
+        [task]="editingTask"
+        [errorMessage]="formError"
+        (formSubmit)="onFormSubmit($event)"
+        (formCancel)="closeForm()"
+      />
+    </div>
+  </div>
+}
+
+
+<!-- ── Detail modal ─────────────────────────────────────────── -->
+@if (selectedTask) {
+  <div class="modal-overlay" (click)="closeTask()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+
+      <div class="modal-top-bar"
+           [ngClass]="'bar-' + selectedTask.status.toLowerCase().replace('_', '')">
+      </div>
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-header-left">
+            <span class="modal-status" [ngClass]="'status-' + selectedTask.status.toLowerCase()">
+              {{ selectedTask.status }}
+            </span>
+            <h2 class="modal-title">{{ selectedTask.title }}</h2>
+          </div>
+          <button class="modal-close" (click)="closeTask()" aria-label="Close">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+
+        @if (selectedTask.description) {
+          <p class="modal-desc">{{ selectedTask.description }}</p>
+        }
+
+        <div class="modal-meta">
+          <div class="meta-row">
+            <div class="meta-icon-wrap"><mat-icon>flag</mat-icon></div>
+            <span class="meta-label">Status</span>
+            <span class="meta-value">{{ selectedTask.status }}</span>
+          </div>
+          @if (selectedTask.createdAt) {
+            <div class="meta-row">
+              <div class="meta-icon-wrap"><mat-icon>schedule</mat-icon></div>
+              <span class="meta-label">Created</span>
+              <span class="meta-value">{{ selectedTask.createdAt | date: 'dd MMM yyyy, HH:mm' }}</span>
+            </div>
+          }
+        </div>
+
+        <div class="modal-footer">
+          <button mat-button class="modal-delete" (click)="deleteTask(selectedTask.id!)">
+            <mat-icon>delete_outline</mat-icon> Delete
+          </button>
+          <button mat-button class="modal-edit" (click)="openForm(selectedTask); closeTask()">
+            <mat-icon>edit</mat-icon> Edit task
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+}
+
+
+<!-- ── Toast stack ──────────────────────────────────────────── -->
+<div class="toast-stack">
+  @for (t of toasts; track t.id) {
+    <div class="toast"
+         [class.toast-created]="t.kind === 'created'"
+         [class.toast-updated]="t.kind === 'updated'"
+         [class.toast-deleted]="t.kind === 'deleted'"
+         [class.toast-error]="t.kind === 'error'"
+         [class.toast-leaving]="t.leaving">
+
+      <div class="toast-icon-wrap">
+        <mat-icon class="toast-icon">{{ toastIcon(t.kind) }}</mat-icon>
+      </div>
+
+      <div class="toast-body">
+        <span class="toast-title">{{ t.title }}</span>
+        <span class="toast-msg">{{ t.message }}</span>
+      </div>
+
+      <button class="toast-close" (click)="dismissToast(t.id)" aria-label="Dismiss">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <div class="toast-progress"
+           [class.toast-progress-created]="t.kind === 'created'"
+           [class.toast-progress-updated]="t.kind === 'updated'"
+           [class.toast-progress-deleted]="t.kind === 'deleted'"
+           [class.toast-progress-error]="t.kind === 'error'">
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Syne:wght@400;500;600;700&display=swap');
+
+$ink:   #0a0a0a;
+$ash:   #3a3a3a;
+$slate: #6e6e6e;
+$mist:  #b0b0b0;
+$smoke: #e2e2e2;
+$fog:   #f2f2f0;
+$white: #ffffff;
+
+:host { display: block; }
+
+// ── Wrapper ───────────────────────────────────────────────────
+.confirm-dialog {
+  padding: 0;
+  overflow: hidden;
+}
+
+// ── Top accent bar  ─────────────────────
+.confirm-dialog__bar {
+  height: 5px;
+  background: #cc2222;
+}
+
+// ── Inner content padding ─────────────────────────────────────
+.confirm-dialog__inner {
+  padding: 28px 32px 24px;
+}
+
+// ── Header row ────────────────────────────────────────────────
+.confirm-dialog__header {
+  display:     flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.confirm-dialog__header-left {
+  display:        flex;
+  flex-direction: column;
+  gap:            6px;
+}
+
+.confirm-dialog__eyebrow {
+  font-family:    'Syne', sans-serif;
+  font-size:      0.6rem;
+  font-weight:    700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color:          $mist;
+}
+
+.confirm-dialog__title {
+  font-family:    'Playfair Display', serif;
+  font-size:      1.5rem;
+  font-weight:    900;
+  color:          $ink;
+  margin:         0;
+  line-height:    1.2;
+  letter-spacing: -0.02em;
+}
+
+// ── Body text ─────────────────────────────────────────────────
+.confirm-dialog__message {
+  font-family: 'Syne', sans-serif;
+  font-size:   0.85rem;
+  font-weight: 500;
+  color:       $ash;
+  line-height: 1.7;
+  margin:      0 0 8px;
+  padding:     16px;
+  border:      1.5px solid $smoke;
+  background:  $fog;
+}
+
+.confirm-dialog__warning {
+  font-family:    'Syne', sans-serif;
+  font-size:      0.62rem;
+  font-weight:    700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color:          $mist;
+  display:        flex;
+  align-items:    center;
+  gap:            6px;
+  margin:         8px 0 24px;
+
+  &::before {
+    content:       '';
+    display:       inline-block;
+    width:         14px;
+    height:        1.5px;
+    background:    $mist;
+    flex-shrink:   0;
+  }
+}
+
+// ── Footer buttons ────────────────────────────────────────────
+.confirm-dialog__footer {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  padding-top:     18px;
+  border-top:      1.5px solid $smoke;
+}
+
+.btn-cancel {
+  font-family:    'Syne', sans-serif !important;
+  font-size:      0.65rem !important;
+  font-weight:    700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color:          $slate !important;
+  background:     transparent !important;
+  border:         1.5px solid $smoke !important;
+  border-radius:  0 !important;
+  height:         38px !important;
+  padding:        0 18px !important;
+  box-shadow:     none !important;
+  transition:     border-color 0.15s, color 0.15s !important;
+
+  &:hover {
+    border-color: $ink !important;
+    color:        $ink !important;
+  }
+}
+
+.btn-delete {
+  font-family:    'Syne', sans-serif !important;
+  font-size:      0.65rem !important;
+  font-weight:    700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color:          $white !important;
+  background:     #cc2222 !important;
+  border:         1.5px solid #cc2222 !important;
+  border-radius:  0 !important;
+  height:         38px !important;
+  padding:        0 22px !important;
+  box-shadow:     none !important;
+  display:        flex !important;
+  align-items:    center;
+  gap:            6px;
+  transition:     background 0.15s, box-shadow 0.15s !important;
+
+  mat-icon {
+    font-size: 14px !important;
+    width:     14px !important;
+    height:    14px !important;
+  }
+
+  &:hover {
+    background:  #a81b1b !important;
+    border-color: #a81b1b !important;
+    box-shadow:  3px 3px 0 $ink !important;
+  }
+
+  &:active {
+    background:  $ink !important;
+    border-color: $ink !important;
+    box-shadow:  none !important;
+  }
+}

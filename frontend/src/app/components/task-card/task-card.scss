@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Syne:wght@400;500;600;700&display=swap');
+
+$ink:   #0a0a0a;
+$ash:   #3a3a3a;
+$slate: #6e6e6e;
+$mist:  #b0b0b0;
+$smoke: #e2e2e2;
+$fog:   #f2f2f0;
+$white: #ffffff;
+
+:host { display: block; }
+
+// ── Card base ─────────────────────────────────────────────────
+.task-card {
+  background: $white;
+  border: 1.5px solid $smoke;
+  border-left: 4px solid $ink;
+  padding: 20px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $ink;
+    box-shadow: 4px 4px 0 $ink;
+    transform: translate(-2px, -2px);
+  }
+
+  // Status colour variants on the left border
+  &.card-todo     { border-left-color: #E24B4A; }
+  &.card-progress { border-left-color: #EF9F27; }
+  &.card-done {
+    border-left-color: #639922;
+    opacity: 0.7;
+    .card-title {
+      text-decoration: line-through;
+      text-decoration-color: $mist;
+    }
+  }
+}
+
+// ── Top row ───────────────────────────────────────────────────
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+// ── Status badge ──────────────────────────────────────────────
+.card-status {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  white-space: nowrap;
+  border: 1px solid;
+
+  &.status-to_do {
+    background: #FCEBEB;
+    color: #A32D2D;
+    border-color: #E24B4A;
+  }
+  &.status-in_progress {
+    background: #FAEEDA;
+    color: #854F0B;
+    border-color: #EF9F27;
+  }
+  &.status-done {
+    background: #EAF3DE;
+    color: #3B6D11;
+    border-color: #639922;
+    text-decoration: line-through;
+  }
+}
+
+// ── Action buttons  ───────────────────────
+.card-actions {
+  display: flex;
+  gap: 0;
+  margin-right: -6px;
+  margin-top: -4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+
+  .task-card:hover & { opacity: 1; }
+
+  button {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 0 !important;
+    color: $slate !important;
+    transition: background 0.15s, color 0.15s;
+    &:hover { background: $fog !important; color: $ink !important; }
+  }
+  mat-icon { font-size: 14px !important; width: 14px !important; height: 14px !important; }
+}
+
+// ── Title ─────────────────────────────────────────────────────
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $ink;
+  line-height: 1.4;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+// ── Description preview ───────────────────────────────────────
+.card-desc {
+  font-size: 0.78rem;
+  color: $slate;
+  line-height: 1.7;
+  margin: 0;
+}
+
+// ── View more button ──────────────────────────────────────────
+.view-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: 1px solid $smoke;
+  cursor: pointer;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: $slate;
+  padding: 4px 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  align-self: flex-start;
+  border-radius: 0;
+
+  mat-icon { font-size: 11px !important; width: 11px !important; height: 11px !important; }
+
+  &:hover { background: $ink; color: $white; border-color: $ink; }
+}
+
+// ── Footer: date ──────────────────────────────────────────────
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid $smoke;
+}
+
+.date-icon {
+  font-size: 11px !important;
+  width: 11px !important;
+  height: 11px !important;
+  color: $mist;
+}
+
+.card-date {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: $mist;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

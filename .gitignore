@@ -1,0 +1,21 @@
+# Secrets - never commit
+.env
+
+# Backend build output
+backend/target/
+
+# Backend IDE files
+backend/.idea/
+backend/*.iml
+backend/*.iws
+backend/*.ipr
+backend/HELP.md
+
+# Frontend dependencies & cache
+frontend/node_modules/
+frontend/.angular/
+frontend/dist/
+
+# OS files
+.DS_Store
+Thumbs.db

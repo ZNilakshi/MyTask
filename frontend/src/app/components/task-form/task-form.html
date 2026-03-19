@@ -1,0 +1,71 @@
+<div class="form-inner">
+
+    <!-- Header -->
+    <div class="form-modal-header">
+      <div class="form-modal-header-left">
+        <span class="form-modal-eyebrow">{{ isEditMode ? 'Edit task' : 'New task' }}</span>
+        <h2 class="form-modal-title">{{ isEditMode ? 'Update details' : 'Create a task' }}</h2>
+      </div>
+      <button class="modal-close" (click)="onCancel()" aria-label="Close">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  
+    <!-- Fields -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" placeholder="What needs to be done?" maxlength="100" />
+        <mat-hint align="end">{{ form.get('title')?.value?.length ?? 0 }} / 100</mat-hint>
+        @if (form.get('title')?.invalid && form.get('title')?.touched) {
+          <mat-error>
+            @if (form.get('title')?.hasError('required')) { Title is required. }
+            @if (form.get('title')?.hasError('maxlength')) { Max 100 characters. }
+          </mat-error>
+        }
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"
+                  placeholder="Add more context (optional)"
+                  rows="3" maxlength="500"></textarea>
+        <mat-hint align="end">{{ form.get('description')?.value?.length ?? 0 }} / 500</mat-hint>
+        @if (form.get('description')?.invalid && form.get('description')?.touched) {
+          <mat-error>Max 500 characters.</mat-error>
+        }
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          @for (s of statusOptions; track s) {
+            <mat-option [value]="s">{{ statusLabel(s) }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('status')?.invalid && form.get('status')?.touched) {
+          <mat-error>Status is required.</mat-error>
+        }
+      </mat-form-field>
+  
+      <!-- API error banner -->
+      @if (errorMessage) {
+        <p class="text-error" style="font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin:0 0 16px;">
+          ⚠ {{ errorMessage }}
+        </p>
+      }
+  
+      <!-- Footer buttons -->
+      <div class="form-modal-footer">
+        <button type="button" mat-button class="btn-form-cancel" (click)="onCancel()">
+          Cancel
+        </button>
+        <button type="submit" mat-button class="btn-form-submit" [disabled]="form.invalid">
+          <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+          {{ isEditMode ? 'Save changes' : 'Create task' }}
+        </button>
+      </div>
+  
+    </form>
+  </div>

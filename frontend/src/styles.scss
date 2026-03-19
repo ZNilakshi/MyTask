@@ -1,0 +1,121 @@
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  color-scheme: light;
+
+   background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  font-family: 'DM Sans', sans-serif !important;
+
+
+  margin: 0;
+  height: 100%;
+}
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 16px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.auth-link {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.page-container {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  h1 { margin: 0; }
+
+  .toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .username {
+    font-weight: 500;
+    color: #555;
+  }
+}
+
+.filter-row {
+  margin-bottom: 20px;
+}
+
+.task-table {
+  width: 100%;
+}
+
+.empty-card {
+  text-align: center;
+  padding: 32px;
+  color: #888;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+
+  &.status-TO_DO      { background: #e3f2fd; color: #1565c0; }
+  &.status-IN_PROGRESS { background: #fff8e1; color: #f57f17; }
+  &.status-DONE        { background: #e8f5e9; color: #2e7d32; }
+}
+
+.form-card {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}

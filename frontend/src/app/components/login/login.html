@@ -1,0 +1,60 @@
+<div class="auth-container">
+  <mat-card class="auth-card">
+
+    <div class="card-left">
+      <div class="brand-block">
+        <span class="brand-letter">My Tasks </span>
+        <span class="brand-label">LOGIN</span>
+      </div>
+      <p class="brand-tagline">Sign in to manage<br>your tasks.</p>
+      <div class="brand-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <div class="card-right">
+      <mat-card-header>
+        <mat-card-title>Welcome Back</mat-card-title>
+        <mat-card-subtitle>Sign in to continue</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" placeholder="Enter your username"/>
+            @if (form.get('username')?.hasError('required') && form.get('username')?.touched) {
+              <mat-error>Username is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" placeholder="Enter your password"/>
+            @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
+              <mat-error>Password is required</mat-error>
+            }
+            @if (form.get('password')?.hasError('minlength') && form.get('password')?.touched) {
+              <mat-error>Password must be at least 6 characters</mat-error>
+            }
+          </mat-form-field>
+
+          @if (errorMessage) {
+            <p class="error-message">{{ errorMessage }}</p>
+          }
+
+          <button mat-raised-button type="submit" class="full-width submit-btn" [disabled]="form.invalid">
+            Sign In
+          </button>
+
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <p class="auth-link">Don't have an account? <a routerLink="/register">Register</a></p>
+      </mat-card-actions>
+    </div>
+
+  </mat-card>
+</div>
